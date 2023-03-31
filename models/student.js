@@ -1,36 +1,42 @@
-const mongoose=require('mongoose');
-const validator=require('validator');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
-const studentSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const studentSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error("Invalid email");
+      }
     },
-    email:{
-            type:String,
-            required:true,
-            unique:true,
-            validate(value){
-                if(!validator.isEmail(value))
-                {
-                    throw new Error("Invalid email");
-                }
-            }
-        },
-    phone:{
-        type:Number,
-        min:10,
-        required:true,
-        unique:true,
-    },
-    address:{
-        type:String,
-        required:true,
-    }
-    
+  },
+  phone: {
+    type: Number,
+    min: 10,
+    required: true,
+    unique: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  password:{
+    type:String,
+    required:true,
+  }
+});
+
+studentSchema.pre("save",async function(next){
+  this.password=await bcrypt.hash(this.password,10);
+  next();
 })
+const Student = new mongoose.model("Student", studentSchema);
 
-const Student=new mongoose.model('Student',studentSchema);
-
-module.exports=Student;
-
+module.exports = Student;

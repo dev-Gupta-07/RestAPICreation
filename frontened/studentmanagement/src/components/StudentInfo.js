@@ -15,8 +15,9 @@ const StudentInfo = () => {
     const [email, setEmail] = useState();
     const [phone, setPhone] = useState();
     const [address, setAddress] = useState();
+    const [password,setPassword]=useState();
     const submitHandler=async()=>{
-        if (!name || !email || !phone|| !address) {
+        if (!name || !email || !phone|| !address||!password) {
       toast({
         title: "Please fill all the fields",
         status: "warning",
@@ -39,7 +40,8 @@ const StudentInfo = () => {
            email,
            phone,
            address,
-         },
+           password
+        },
          config
        );
         console.log(data);
@@ -90,10 +92,17 @@ const StudentInfo = () => {
             />
           </FormControl>
           <FormControl id="address" isRequired>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>Address</FormLabel>
             <Input
               placeholder="Enter your address"
               onChange={(e) => setAddress(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="password" isRequired>
+            <FormLabel>Password</FormLabel>
+            <Input
+              placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
           <Button
@@ -101,7 +110,6 @@ const StudentInfo = () => {
             width="30%"
             style={{ marginTop: 15 }}
             onClick={submitHandler}
-           
           >
             Sign Up
           </Button>

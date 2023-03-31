@@ -13,14 +13,15 @@ app.post("/", (req, res) => {
   res.send("Hello");
 });
 app.post("/login", (req, res) => {
-  
   const user = new Student({
-    name:req.body.name,
-    email:req.body.email,
-    phone:req.body.phone,
-    address:req.body.address
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    address: req.body.address,
+    password: req.body.password,
   });
   res.send(user);
+  
   user
     .save()
     .then(() => {
