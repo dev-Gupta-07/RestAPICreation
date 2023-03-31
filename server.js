@@ -10,16 +10,25 @@ app.use(express.json());
 
 const PORT = process.env.port || 6600;
 app.post("/", (req, res) => {
-  res.send("shu");
+  res.send("Hello");
 });
 app.post("/login", (req, res) => {
-  console.log(req.body);
-  const user = new Student(req.body);
+  
+  const user = new Student({
+    name:req.body.name,
+    email:req.body.email,
+    phone:req.body.phone,
+    address:req.body.address
+  });
   res.send(user);
-  user.save().then(()=>{
-    res.status(201).send()}).catch((e)=>{
-        throw new Error("Cannot create");
+  user
+    .save()
+    .then(() => {
+      res.status(201).send();
     })
+    .catch((e) => {
+      throw new Error("Cannot create");
+    });
 });
 
 app.listen(PORT, () => {
