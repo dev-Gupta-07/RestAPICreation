@@ -1,5 +1,5 @@
-import React,{useState}from 'react'
-import axios from "axios"
+import React, { useState } from "react";
+import axios from "axios";
 import {
   useToast,
   Button,
@@ -7,17 +7,16 @@ import {
   FormControl,
   FormLabel,
   Input,
-
 } from "@chakra-ui/react";
 const StudentInfo = () => {
-   const toast=useToast();
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [phone, setPhone] = useState();
-    const [address, setAddress] = useState();
-    const [password,setPassword]=useState();
-    const submitHandler=async()=>{
-        if (!name || !email || !phone|| !address||!password) {
+  const toast = useToast();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [address, setAddress] = useState();
+  const [password, setPassword] = useState();
+  const submitHandler = async () => {
+    if (!name || !email || !phone || !address || !password) {
       toast({
         title: "Please fill all the fields",
         status: "warning",
@@ -27,42 +26,42 @@ const StudentInfo = () => {
       });
       return;
     }
-    try{
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-       const { data } = await axios.post(
-         "/login",
-         {
-           name,
-           email,
-           phone,
-           address,
-           password
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
         },
-         config
-       );
-        console.log(data);
-        toast({
-          title: "Registration Successful",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
-    }catch(error){
-       toast({
-         title: "Error Occured!",
-         description: error.response.data.message,
-         status: "error",
-         duration: 5000,
-         isClosable: true,
-         position: "bottom",
-       });
+      };
+      const { data } = await axios.post(
+        "/sign",
+        {
+          name,
+          email,
+          phone,
+          address,
+          password,
+        },
+        config
+      );
+      console.log(data);
+      toast({
+        title: "Registration Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
-    };
+  };
   return (
     <div>
       <div>
@@ -117,6 +116,6 @@ const StudentInfo = () => {
       </div>
     </div>
   );
-}
+};
 
-export default StudentInfo
+export default StudentInfo;
